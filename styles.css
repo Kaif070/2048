@@ -140,6 +140,7 @@ h1 {
     justify-content: center;
     transition: all 0.15s ease-in-out;
     animation: appear 0.2s ease-in-out;
+    text-align: center;
 }
 
 @keyframes appear {
