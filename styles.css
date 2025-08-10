@@ -1,3 +1,94 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #776e65;
+    font-size: 18px;
+    line-height: 1.6;
+    touch-action: manipulation;
+    -webkit-text-size-adjust: none;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Header */
+header {
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: bold;
+    color: #776e65;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.score-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.score-box {
+    background: #bbada0;
+    border-radius: 6px;
+    padding: 10px 20px;
+    color: white;
+    position: relative;
+    min-width: 80px;
+}
+
+.score-label {
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.score {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* Game intro */
+.game-intro {
+    margin-bottom: 25px;
+}
+
+.game-intro p {
+    font-size: 16px;
+    color: #776e65;
+    margin-bottom: 10px;
+}
+
+.controls-hint {
+    font-size: 14px;
+    color: #8f7a66;
+}
+
+.desktop {
+    display: inline;
+}
+
+.mobile {
+    display: none;
+}
+
+/* Game container */
 .game-container {
     position: relative;
     background: #bbada0;
@@ -8,11 +99,33 @@
     max-width: 340px;
 }
 
+.grid-container {
+    position: relative;
+}
+
+.grid-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.grid-row:last-child {
+    margin-bottom: 0;
+}
+
 .grid-cell {
     width: 70px;
     height: 70px;
     background: rgba(238, 228, 218, 0.35);
     border-radius: 6px;
+}
+
+.tile-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
 }
 
 .tile {
@@ -27,12 +140,221 @@
     justify-content: center;
     transition: all 0.15s ease-in-out;
     animation: appear 0.2s ease-in-out;
-    text-align: center;
-    line-height: 1;
 }
 
-/* Responsive tile sizes for mobile */
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.tile-merged {
+    animation: pop 0.2s ease-in-out;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Tile colors */
+.tile-2 { background: #eee4da; color: #776e65; }
+.tile-4 { background: #ede0c8; color: #776e65; }
+.tile-8 { background: #f2b179; color: #f9f6f2; }
+.tile-16 { background: #f59563; color: #f9f6f2; }
+.tile-32 { background: #f67c5f; color: #f9f6f2; }
+.tile-64 { background: #f65e3b; color: #f9f6f2; }
+.tile-128 { background: #edcf72; color: #f9f6f2; font-size: 20px; }
+.tile-256 { background: #edcc61; color: #f9f6f2; font-size: 20px; }
+.tile-512 { background: #edc850; color: #f9f6f2; font-size: 20px; }
+.tile-1024 { background: #edc53f; color: #f9f6f2; font-size: 18px; }
+.tile-2048 { background: #edc22e; color: #f9f6f2; font-size: 18px; }
+
+.tile-super {
+    background: #3c3a32;
+    color: #f9f6f2;
+    font-size: 16px;
+}
+
+/* Restart button */
+.restart-button {
+    background: #8f7a66;
+    border: none;
+    border-radius: 6px;
+    color: #f9f6f2;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 24px;
+    transition: all 0.15s ease-in-out;
+}
+
+.restart-button:hover {
+    background: #9f8a76;
+}
+
+.restart-button:active {
+    background: #7f6a56;
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(238, 228, 218, 0.73);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.modal h2 {
+    color: #776e65;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.modal-stats {
+    margin: 20px 0 30px;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.stat:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    font-weight: 600;
+    color: #8f7a66;
+}
+
+.stat-value {
+    font-weight: bold;
+    color: #776e65;
+    font-size: 20px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn {
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 12px 20px;
+    transition: all 0.15s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-secondary {
+    background: #8f7a66;
+    color: #f9f6f2;
+}
+
+.btn-secondary:hover {
+    background: #9f8a76;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #5a6fd8;
+}
+
+.share-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #4caf50;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    z-index: 1001;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.toast svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Mobile optimizations */
 @media (max-width: 520px) {
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 36px;
+    }
+    
+    .desktop {
+        display: none;
+    }
+    
+    .mobile {
+        display: inline;
+    }
+    
     .game-container {
         max-width: 280px;
     }
@@ -57,6 +379,15 @@
     
     .tile-super {
         font-size: 12px;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
     }
 }
 
@@ -85,5 +416,24 @@
     
     .tile-super {
         font-size: 10px;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .tile {
+        border: 2px solid #000;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .tile,
+    .tile-merged,
+    .btn,
+    .restart-button,
+    .toast {
+        transition: none;
+        animation: none;
     }
 }
