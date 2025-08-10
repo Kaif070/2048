@@ -186,7 +186,7 @@ class Game2048 {
         
         // Add new tile after successful move
         this.addRandomTile();
-        this.updateDisplay();
+        this.Display();
         
         // Check for win condition (2048 tile reached)
         if (!this.gameWon && this.hasWon()) {
@@ -442,8 +442,8 @@ class Game2048 {
                             tile.classList.add('tile-super');
                         }
                         tile.textContent = this.board[row][col];
-                        tile.style.left = `${col * 80 + 10}px`;
-                        tile.style.top = `${row * 80 + 10}px`;
+                        tile.style.left = `${col * 80}px`;
+                        tile.style.top = `${row * 80}px`
                         this.tileContainer.appendChild(tile);
                     }
                 }
