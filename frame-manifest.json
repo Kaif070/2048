@@ -18,19 +18,19 @@
     ],
     "farcaster": {
         "version": "vNext",
-        "imageUrl": "https://your-domain.com/frame-image.png",
+        "imageUrl": "https://kaif070.github.io/2048/frame-image.png",
         "buttons": [
             {
                 "label": "Play 2048",
                 "action": "post"
             }
         ],
-        "postUrl": "https://your-domain.com/frame",
+        "postUrl": "https://kaif070.github.io/2048/frame",
         "inputText": "Optional: Add a message with your score"
     },
     "categories": ["games", "social"],
     "developer": {
-        "name": "Your Name",
-        "url": "https://your-domain.com"
+        "name": "Muhammad Kaif",
+        "url": "https://kaif070.github.io"
     }
 }
