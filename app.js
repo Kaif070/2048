@@ -36,38 +36,58 @@ class Game2048 {
     }
     
     setupEventListeners() {
-        // Keyboard controls
-        document.addEventListener('keydown', (e) => {
-            if (this.gameOver && !document.getElementById('modalOverlay').classList.contains('show')) return;
-            
-            let moved = false;
-            switch(e.key) {
-                case 'ArrowUp':
-                case 'w':
-                case 'W':
-                    e.preventDefault();
-                    moved = this.move('up');
-                    break;
-                case 'ArrowDown':
-                case 's':
-                case 'S':
-                    e.preventDefault();
-                    moved = this.move('down');
-                    break;
-                case 'ArrowLeft':
-                case 'a':
-                case 'A':
-                    e.preventDefault();
-                    moved = this.move('left');
-                    break;
-                case 'ArrowRight':
-                case 'd':
-                case 'D':
-                    e.preventDefault();
-                    moved = this.move('right');
-                    break;
-            }
-        });
+    // Keyboard controls - make sure the window has focus
+    const handleKeyPress = (e) => {
+        if (this.gameOver && !document.getElementById('modalOverlay')?.classList.contains('show')) return;
+        
+        let moved = false;
+        
+        // Prevent default behavior for arrow keys
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+            e.preventDefault();
+        }
+        
+        switch(e.key) {
+            case 'ArrowUp':
+            case 'w':
+            case 'W':
+                e.preventDefault();
+                moved = this.move('up');
+                break;
+            case 'ArrowDown':
+            case 's':
+            case 'S':
+                e.preventDefault();
+                moved = this.move('down');
+                break;
+            case 'ArrowLeft':
+            case 'a':
+            case 'A':
+                e.preventDefault();
+                moved = this.move('left');
+                break;
+            case 'ArrowRight':
+            case 'd':
+            case 'D':
+                e.preventDefault();
+                moved = this.move('right');
+                break;
+        }
+        
+        if (moved) {
+            console.log('Move successful:', e.key); // Debug log
+        }
+    };
+    
+    // Add event listener to document
+    document.addEventListener('keydown', handleKeyPress);
+    
+    // Also add to window for better compatibility
+    window.addEventListener('keydown', handleKeyPress);
+    
+    // Make sure the page can receive focus
+    document.body.setAttribute('tabindex', '0');
+    document.body.focus();
         
         // Touch controls for mobile
         let startX, startY;
@@ -600,3 +620,9 @@ document.addEventListener('touchend', (e) => {
     }
     lastTouchEnd = now;
 }, false);
+// Temporary debug - remove this later
+document.addEventListener('keydown', (e) => {
+    console.log('Key pressed:', e.key);
+});
+
+console.log('Debug: JavaScript loaded and running');
